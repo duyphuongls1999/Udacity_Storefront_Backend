@@ -1,76 +1,55 @@
-# Image Processing API
+# Storefront backend
+This repo contains the backend application for an eCommerce store front. It is a RESTful API.
 
-This is a project for the Image Processing API in the Full Stack JavaScript Developer Nanodegree program at Udacity.
+The database schema and and API route information can be found in the [requirements doc](REQUIREMENTS.md).
+## Libraries used
+The application uses the following libraries: 
+* Runtime: Node.js (JavaScript)
+* Web application framework: Express
+* Language: TypeScript 
+* Database: Postgres
+* Testing: Jasmine and Supertest
 
-## Project Description
+## Installation Instructions
+### Dev mode
+To install the app's dependencies and use the app in dev mode, run the following: 
 
-The Image Processing API is a Node.js application that allows users to resize and process images. It provides an API endpoint that accepts image information (filename, width, and height) and returns the resized image.
+`yarn && yarn create-dev-db` 
 
-## Available Scripts
+`yarn create-dev-db` runs a script that uses db-migrate to create a new database called `full_stack_dev` and runs the migrations to create the tables. This script assumes you have installed `postgres` on your local system and the server is running.
 
-In the project directory, you can run the following scripts:
+To run the app in dev mode execute `yarn start`.
+### Test mode
+To install the app's dependencies and use the app in test mode, run the following:
 
-- `npm run start`: Starts the server
-- `npm run test`: Compiles the TypeScript code to JavaScript and runs the unit tests
-- `npm run build`: Compiles the TypeScript code to JavaScript
-- `npm run prettier`: Run to reformat codes according to the pattern after codes has been changed and added to git
-- `npm run lint`: Run to identify and report syntax errors, potential bugs, and code style violations
+`yarn && yarn create-test-db`
 
-## Usage
-The server will listen on port 3000:
+`yarn create-test-db` runs a script that uses db-migrate to create a new database called `full_stack_test` and runs the migrations to create the tables. This script assumes you have installed `postgres` on your local system and the server is running.
 
-#### Brief instructions
-http://localhost:3000/
+To run the tests execute `yarn test`.
 
-#### Endpoint to resize image
-http://localhost:3000/api/image
+NOTE: It is not necessary to run `db-migrate up` at the command line as the scripts contain the necessary calls to operations. 
 
-Expected query arguments are:
-- _imageFileName_: Available filenames is imageName.imageExtension
-- _width_: numerical pixel value > 0
-- _height_: numerical pixel value > 0
+### Ports
+The application runs on port `3000` with database on `5432`.
 
-#### Example 1
-http://localhost:3000/api/image?imageFileName=spiderman.png&width=500&height=500
-Will scale the fjord image to 200 by 200 pixels and store the resulting image.
-On subsequent calls will serve the resized image instead of resizing the
-original again.
+### Environment variables 
+To satisfy Udacity requirements, the following environment variable are needed.
+```
+NODE_ENV = dev
 
-#### Example 2
-http://localhost:3000/api/image?width=500&height=500
-Missing image file name.
+# DB VARIABLES
+DB_HOST=localhost
+DB_PORT=5432
+DB_NAME_DEV=storefront_dev
+DB_NAME_TEST=storefront_test
+DB_USER=postgres
+DB_PASS=123456
 
-#### Example 3
-http://localhost:3000/api/image?imageFileName=spiderman.png&width=-500&height=500
-Invalid width parameter.
+# BCRYPT VARIABLES
+BCRYPT_PASSWORD=$2a$08$j3hOyrJ8X0zcPOCZHyVw4uggAO7hkBipA/QscePpVSpOEGrsUGaYu
+SALT_ROUNDS=8
 
-#### Example 4
-http://localhost:3000/api/image?imageFileName=spiderman.png&width=500
-Missing height parameter.
-
-#### Example 5
-http://localhost:3000/api/image?imageFileName=image.png&width=500&height=500
-Image not exist.
-
-## Getting Started
-
-To get started with the Image Processing API, follow these steps:
-
-1. Clone the repository: `git clone https://github.com/duyphuongls1999/udacity_image_processing_api.git`
-2. Install the dependencies: `npm install`
-3. Start the server: `npm run start`
-4. Access the API endpoint: `http://localhost:3000/api/image?imageFileName={imageName.imageExtension}&width={width}&height={height}`
-
-## Dependencies
-
-The project uses the following dependencies:
-- Express: Web framework for Node.js
-- Sharp: Image processing library
-- Jasmine: Testing framework
-- Jasmine Console Reporter: Console reporter for Jasmine tests
-- Supertest: HTTP assertion library for testing
-- Husky: Used to perform automatic tasks before and after executing git commands
-
-## Contributing
-
-Contributions to the Image Processing API are welcome! If you find any issues or have suggestions for improvements, please open an issue or submit a pull request.
+# JWT
+JWT_SECRET=anhhaiphuong@22
+```

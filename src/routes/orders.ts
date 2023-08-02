@@ -1,14 +1,12 @@
-import express from 'express';
-import authToken from '../app/middlewares/auth';
-import OrdersController from '../app/controllers/OrderController';
+import express from "express";
+import { authToken } from "../middlewares/auth";
+import { OrderController } from "../controllers/OrderController";
 
-const ordersRouter = express.Router()
-const controller = new OrdersController()
+export const orderRouter = express.Router();
+const controller = new OrderController();
 
-ordersRouter.get('/', authToken, controller.getOrders)
-ordersRouter.post('/create', authToken, controller.createOrder)
-ordersRouter.put('/:id', authToken, controller.updateOrder)
-ordersRouter.get('/:id', authToken, controller.getOrderById)
-ordersRouter.delete('/:id', authToken, controller.deleteOrder)
-
-export default ordersRouter
+orderRouter.get("/", authToken, controller.getOrders);
+orderRouter.post("/", authToken, controller.createOrder);
+orderRouter.put("/:id", authToken, controller.updateOrder);
+orderRouter.get("/:id", authToken, controller.getOrderById);
+orderRouter.delete("/:id", authToken, controller.deleteOrder);

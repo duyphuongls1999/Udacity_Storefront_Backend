@@ -1,12 +1,12 @@
-import express from 'express'
-import usersRouter from './users'
-import productsRouter from './products'
-import ordersRouter from './orders'
+import express from "express";
+import { userRouter } from "./users";
+import { productRouter } from "./products";
+import { orderRouter } from "./orders";
+import { authRouter } from "./auths";
 
-const apiRouter = express.Router()
+export const apiRouter = express.Router();
 
-apiRouter.use('/users', usersRouter)
-apiRouter.use('/products', productsRouter)
-apiRouter.use('/orders', ordersRouter)
-
-export default apiRouter
+apiRouter.use("/user", userRouter);
+apiRouter.use("/product", productRouter);
+apiRouter.use("/order", orderRouter);
+apiRouter.use("/auth", authRouter);
