@@ -1,7 +1,7 @@
-import express from "express";
-import { UserModel } from "../models/user";
-import { Authentication } from "../utils/Authentication";
-import { User } from "../interfaces/user";
+import express from 'express';
+import { UserModel } from '../models/user';
+import { Authentication } from '../utils/Authentication';
+import { User } from '../interfaces/user';
 
 const userModel = new UserModel();
 
@@ -10,7 +10,7 @@ export class UserController {
     try {
       const users = await userModel.getUsers();
       res.status(200).json({
-        message: "Successfully getted users!",
+        message: 'Successfully getted users!',
         result: users,
       });
     } catch (error: any) {
@@ -24,7 +24,7 @@ export class UserController {
     try {
       const user = await userModel.getUserById(parseInt(req.params.id));
       res.status(200).json({
-        message: "Successfully getted users!",
+        message: 'Successfully getted users!',
         result: user,
       });
     } catch (error: any) {
@@ -38,7 +38,7 @@ export class UserController {
     try {
       const user = await userModel.getUserByUsername(req.params.username);
       res.status(200).json({
-        message: "Successfully getted users!",
+        message: 'Successfully getted users!',
         result: user,
       });
     } catch (error: any) {
@@ -59,7 +59,7 @@ export class UserController {
       const userById = await userModel.getUserById(id);
       if (!userById) {
         return res.status(400).json({
-          message: "User is not exist!",
+          message: 'User is not exist!',
         });
       }
 
@@ -76,12 +76,12 @@ export class UserController {
         first_name: (first_name !='undefined' && first_name) ? first_name : userById.first_name,
         last_name: (last_name !='undefined' && last_name) ? last_name : userById.last_name,
         password: (password !='undefined' && password) ? await Authentication.passwordHash(password) : userById.password,
-      }
+      };
 
       const userUpdated = await userModel.updateUser(userUpdate);
 
       res.status(200).json({
-        message: "Successfully updated users!",
+        message: 'Successfully updated users!',
         result: userUpdated,
       });
     } catch (error: any) {

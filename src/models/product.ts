@@ -1,13 +1,13 @@
 // @ts-ignore
-import { pool } from "../config/database";
-import { Product } from "../interfaces/product";
+import { pool } from '../config/database';
+import { Product } from '../interfaces/product';
 
 export class ProductModel {
   async getProducts(): Promise<Product[]> {
     try {
       // @ts-ignore
       const connection = await pool.connect();
-      const sql = "SELECT * FROM public.product";
+      const sql = 'SELECT * FROM public.product';
 
       const result = await connection.query(sql);
       connection.release();
@@ -20,7 +20,7 @@ export class ProductModel {
 
   async getProductById(id: number): Promise<Product> {
     try {
-      const sql = "SELECT * FROM public.product WHERE id=($1)";
+      const sql = 'SELECT * FROM public.product WHERE id=($1)';
       // @ts-ignore
       const connection = await pool.connect();
 
@@ -36,7 +36,7 @@ export class ProductModel {
   async createProduct(p: Product): Promise<Product> {
     try {
       const sql =
-        "INSERT INTO public.product (name, price, category, description) VALUES($1, $2, $3, $4) RETURNING *";
+        'INSERT INTO public.product (name, price, category, description) VALUES($1, $2, $3, $4) RETURNING *';
       // @ts-ignore
       const connection = await pool.connect();
 
@@ -56,7 +56,7 @@ export class ProductModel {
 
   async updateProduct(p: Product): Promise<Product> {
     try {
-      const sql = `UPDATE public.product SET name = $2, price = $3, category = $4 WHERE id = $1 RETURNING *`;
+      const sql = 'UPDATE public.product SET name = $2, price = $3, category = $4 WHERE id = $1 RETURNING *';
       // @ts-ignore
       const connection = await pool.connect();
       const result = await connection.query(sql, [
@@ -75,7 +75,7 @@ export class ProductModel {
 
   async deleteProduct(id: number): Promise<Product> {
     try {
-      const sql = "DELETE FROM public.product WHERE id=($1)";
+      const sql = 'DELETE FROM public.product WHERE id=($1)';
       // @ts-ignore
       const conn = await pool.connect();
 

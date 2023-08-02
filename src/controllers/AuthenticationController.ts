@@ -1,6 +1,6 @@
-import express from "express";
-import {Authentication} from "../utils/Authentication";
-import { UserModel } from "../models/user";
+import express from 'express';
+import {Authentication} from '../utils/Authentication';
+import { UserModel } from '../models/user';
 
 const userModel = new UserModel();
 
@@ -15,20 +15,20 @@ export class AuthenticationController {
           user.password as string
         );
         if (passwordMatch) {
-          // @ts-ignore
+        // @ts-ignore
           const res_token = await Authentication.generateToken(user.id, user.username);
           return res.status(200).json({
-            message: "Successfully login!",
+            message: 'Successfully login!',
             token: res_token,
           });
         } else {
           return res.status(400).json({
-            message: "Wrong password!",
+            message: 'Wrong password!',
           });
         }
       } else {
         return res.status(400).json({
-          message: "Wrong username!",
+          message: 'Wrong username!',
         });
       }
     } catch (error: any) {
@@ -43,20 +43,20 @@ export class AuthenticationController {
       const { username, password, passwordConfirm } = req.body;
       if (!username || !password || !passwordConfirm) {
         return res.status(400).json({
-          message: "Missing username, password or passwordConfirm!",
+          message: 'Missing username, password or passwordConfirm!',
         });
       }
 
       if (password !== passwordConfirm) {
         return res.status(400).json({
-          message: "Password and password confirm not match!",
+          message: 'Password and password confirm not match!',
         });
       }
 
       const user = await userModel.getUserByUsername(username as string);
       if (user) {
         return res.status(400).json({
-          message: "Username is exist!",
+          message: 'Username is exist!',
         });
       }
 
@@ -72,7 +72,7 @@ export class AuthenticationController {
       });
 
       res.status(200).json({
-        message: "Successfully register user!",
+        message: 'Successfully register user!',
       });
     } catch (error: any) {
       res.status(500).json({

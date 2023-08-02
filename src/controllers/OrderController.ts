@@ -1,5 +1,5 @@
-import { OrderModel } from "../models/order";
-import { Request, Response } from "express";
+import { OrderModel } from '../models/order';
+import { Request, Response } from 'express';
 
 const orderModel = new OrderModel();
 
@@ -8,7 +8,7 @@ export class OrderController {
     try {
       const orders = await orderModel.getOrders();
       return res.status(200).json({
-        message: "Successfully get all orders data!",
+        message: 'Successfully get all orders data!',
         result: orders,
       });
     } catch (error: any) {
@@ -24,22 +24,22 @@ export class OrderController {
 
       if (!user_id) {
         return res.status(400).json({
-          message: "Missing user id!",
+          message: 'Missing user id!',
         });
       }
       if (!product_id) {
         return res.status(400).json({
-          message: "Missing product id!",
+          message: 'Missing product id!',
         });
       }
       if (!quantity) {
         return res.status(400).json({
-          message: "Missing quantity",
+          message: 'Missing quantity',
         });
       }
       if (!status) {
         return res.status(400).json({
-          message: "Missing status!",
+          message: 'Missing status!',
         });
       }
 
@@ -51,7 +51,7 @@ export class OrderController {
       });
 
       return res.status(200).json({
-        message: "Successfully created order!",
+        message: 'Successfully created order!',
         result: orderCreate,
       });
     } catch (error: any) {
@@ -68,22 +68,22 @@ export class OrderController {
 
       if (!user_id) {
         return res.status(400).json({
-          message: "Missing user id!",
+          message: 'Missing user id!',
         });
       }
       if (!status) {
         return res.status(400).json({
-          message: "Missing status!",
+          message: 'Missing status!',
         });
       }
       if (!product_id) {
         return res.status(400).json({
-          message: "Missing product id!",
+          message: 'Missing product id!',
         });
       }
       if (!quantity) {
         return res.status(400).json({
-          message: "Missing quantity!",
+          message: 'Missing quantity!',
         });
       }
 
@@ -102,7 +102,7 @@ export class OrderController {
         quantity: parseInt(quantity as string),
       });
       res.status(200).json({
-        message: "Successfully updated order!",
+        message: 'Successfully updated order!',
         result: orderUpdate,
       });
     } catch (error: any) {
@@ -119,7 +119,7 @@ export class OrderController {
         res.status(404).json({ status: `Not found order ${req.params.id}` });
       }
       res.status(200).json({
-        message: "Successfully getted order!",
+        message: 'Successfully getted order!',
         result: order,
       });
     } catch (error: any) {

@@ -1,13 +1,13 @@
 // @ts-ignore
-import { pool } from "../config/database";
-import { User } from "../interfaces/user";
+import { pool } from '../config/database';
+import { User } from '../interfaces/user';
 
 export class UserModel {
   async getUsers(): Promise<User[]> {
     try {
       // @ts-ignore
       const connection = await pool.connect();
-      const sql = "SELECT * FROM public.user";
+      const sql = 'SELECT * FROM public.user';
       const result = await connection.query(sql);
       connection.release();
 
@@ -19,7 +19,7 @@ export class UserModel {
 
   async getUserById(id: number): Promise<User> {
     try {
-      const sql = "SELECT * FROM public.user WHERE id=($1)";
+      const sql = 'SELECT * FROM public.user WHERE id=($1)';
       // @ts-ignore
       const connection = await pool.connect();
       const result = await connection.query(sql, [id]);
@@ -33,7 +33,7 @@ export class UserModel {
 
   async getUserByUsername(username: string): Promise<User> {
     try {
-      const sql = "SELECT * FROM public.user WHERE username=($1)";
+      const sql = 'SELECT * FROM public.user WHERE username=($1)';
       // @ts-ignore
       const connection = await pool.connect();
       const result = await connection.query(sql, [username]);
@@ -48,7 +48,7 @@ export class UserModel {
   
   async getUserByUsernameAndNotId(username: string, id: number): Promise<User> {
     try {
-      const sql = "SELECT * FROM public.user WHERE username=($1) AND id != ($2)";
+      const sql = 'SELECT * FROM public.user WHERE username=($1) AND id != ($2)';
       // @ts-ignore
       const connection = await pool.connect();
       const result = await connection.query(sql, [username, id]);
@@ -65,7 +65,7 @@ export class UserModel {
       // @ts-ignore
       const connection = await pool.connect();
       const sql =
-        "INSERT INTO public.user (username, first_name, last_name, password) VALUES($1, $2, $3, $4)";
+        'INSERT INTO public.user (username, first_name, last_name, password) VALUES($1, $2, $3, $4)';
 
       const result = await connection.query(sql, [
         u.username,
@@ -85,7 +85,7 @@ export class UserModel {
     try {
       // @ts-ignore
       const connection = await pool.connect();
-      const sql = `UPDATE public.user SET username = $2, first_name = $3, last_name = $4, password = $5 WHERE id = $1 RETURNING *`;
+      const sql = 'UPDATE public.user SET username = $2, first_name = $3, last_name = $4, password = $5 WHERE id = $1 RETURNING *';
 
       const result = await connection.query(sql, [
         u.id,
@@ -106,7 +106,7 @@ export class UserModel {
     try {
       // @ts-ignore
       const connection = await pool.connect();
-      const sql = "DELETE FROM public.user WHERE id=($1)";
+      const sql = 'DELETE FROM public.user WHERE id=($1)';
       const result = await connection.query(sql, [id]);
       connection.release();
 

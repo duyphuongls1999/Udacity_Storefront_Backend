@@ -1,5 +1,5 @@
-import express from "express";
-import { ProductModel } from "../models/product";
+import express from 'express';
+import { ProductModel } from '../models/product';
 
 const productModel = new ProductModel();
 
@@ -8,7 +8,7 @@ export class ProductController {
     try {
       const products = await productModel.getProducts();
       res.status(200).json({
-        message: "Successfully getted products!",
+        message: 'Successfully getted products!',
         result: products,
       });
     } catch (error: any) {
@@ -24,7 +24,7 @@ export class ProductController {
         parseInt(req.params.id)
       );
       res.status(200).json({
-        message: "Successfully getted products!",
+        message: 'Successfully getted products!',
         result: product,
       });
     } catch (error: any) {
@@ -38,7 +38,7 @@ export class ProductController {
     try {
       if (!req.body.name) {
         return res.status(400).json({
-          message: "Product name is required!",
+          message: 'Product name is required!',
         });
       }
       const product = await productModel.createProduct({
@@ -48,7 +48,7 @@ export class ProductController {
         description: req.body.description as string,
       });
       res.status(200).json({
-        message: "Successfully created products!",
+        message: 'Successfully created products!',
         result: product,
       });
     } catch (error: any) {
@@ -62,7 +62,7 @@ export class ProductController {
     try {
       if (!req.body.name) {
         return res.status(400).json({
-          message: "Product name is required!",
+          message: 'Product name is required!',
         });
       }
       const product = await productModel.getProductById(
@@ -81,7 +81,7 @@ export class ProductController {
         description: req.body.description as string,
       });
       res.status(200).json({
-        message: "Successfully updated products!",
+        message: 'Successfully updated products!',
         result: productUpdate,
       });
     } catch (error: any) {

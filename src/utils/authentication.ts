@@ -1,5 +1,5 @@
-import jwt from "jsonwebtoken";
-import bcrypt from "bcrypt";
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
 
 const tokenSecret: string = process.env.JWT_SECRET as string;
 const saltRounds: number = parseInt(process.env.SALT_ROUNDS as string);
@@ -7,7 +7,7 @@ const saltRounds: number = parseInt(process.env.SALT_ROUNDS as string);
 export class Authentication {
   public static generateToken(id: number, username: string): string {
     return jwt.sign({ id, username }, tokenSecret, {
-      expiresIn: "5h",
+      expiresIn: '5h',
     });
   }
 

@@ -1,13 +1,13 @@
 // @ts-ignore
-import { pool } from "../config/database";
-import { Order } from "../interfaces/order";
+import { pool } from '../config/database';
+import { Order } from '../interfaces/order';
 
 export class OrderModel {
   async getOrders(): Promise<Order[]> {
     try {
       // @ts-ignore
       const connection = await pool.connect();
-      const sql = "SELECT * FROM public.order";
+      const sql = 'SELECT * FROM public.order';
 
       const result = await connection.query(sql);
       connection.release();
@@ -21,7 +21,7 @@ export class OrderModel {
   async createOrder(o: Order): Promise<Order> {
     try {
       const sql =
-        "INSERT INTO public.order (user_id, status) VALUES($1, $2) RETURNING *";
+        'INSERT INTO public.order (user_id, status) VALUES($1, $2) RETURNING *';
       // @ts-ignore
       const connection = await pool.connect();
 
@@ -36,7 +36,7 @@ export class OrderModel {
 
   async updateOrder(o: Order): Promise<Order> {
     try {
-      const sql = `UPDATE public.order SET user_id = $2, status = $3 WHERE id = $1 RETURNING *`;
+      const sql = 'UPDATE public.order SET user_id = $2, status = $3 WHERE id = $1 RETURNING *';
       // @ts-ignore
       const connection = await pool.connect();
 
@@ -51,7 +51,7 @@ export class OrderModel {
 
   async getOrderById(id: number): Promise<Order> {
     try {
-      const sql = "SELECT * FROM public.order WHERE id=($1)";
+      const sql = 'SELECT * FROM public.order WHERE id=($1)';
       // @ts-ignore
       const connection = await pool.connect();
 
@@ -67,7 +67,7 @@ export class OrderModel {
     try {
       // @ts-ignore
       const conn = await pool.connect();
-      const sql = "DELETE FROM public.order WHERE id=($1)";
+      const sql = 'DELETE FROM public.order WHERE id=($1)';
 
       const result = await conn.query(sql, [id]);
       conn.release();
