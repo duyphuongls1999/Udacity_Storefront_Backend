@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
-import { apiRouter } from '../src/routes/index';
+import { apiRouter } from './routes';
 
 const app = express();
 const port = 3000;

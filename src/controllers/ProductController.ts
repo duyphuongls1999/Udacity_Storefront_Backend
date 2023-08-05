@@ -7,12 +7,12 @@ export class ProductController {
   async getProducts(_req: express.Request, res: express.Response) {
     try {
       const products = await productModel.getProducts();
-      res.status(200).json({
+      return res.status(200).json({
         message: 'Successfully getted products!',
         result: products,
       });
     } catch (error: any) {
-      res.status(500).json({
+      return res.status(500).json({
         message: error.message,
       });
     }
@@ -23,12 +23,17 @@ export class ProductController {
       const product = await productModel.getProductById(
         parseInt(req.params.id)
       );
-      res.status(200).json({
+      if (product === null || product === undefined) {
+        return res.status(404).json({
+          message: `Not found product ${req.params.id}!`,
+        });
+      }
+      return res.status(200).json({
         message: 'Successfully getted products!',
         result: product,
       });
     } catch (error: any) {
-      res.status(500).json({
+      return res.status(500).json({
         message: error.message,
       });
     }
@@ -47,12 +52,12 @@ export class ProductController {
         category: req.body.category as string,
         description: req.body.description as string,
       });
-      res.status(200).json({
+      return res.status(200).json({
         message: 'Successfully created products!',
         result: product,
       });
     } catch (error: any) {
-      res.status(500).json({
+      return res.status(500).json({
         message: error.message,
       });
     }
@@ -68,8 +73,8 @@ export class ProductController {
       const product = await productModel.getProductById(
         parseInt(req.params.id)
       );
-      if (Object.keys(product).length === 0) {
-        res.status(404).json({
+      if (product === null || product === undefined) {
+        return res.status(404).json({
           message: `Not found product ${req.params.id}!`,
         });
       }
@@ -80,12 +85,12 @@ export class ProductController {
         category: req.body.category as string,
         description: req.body.description as string,
       });
-      res.status(200).json({
+      return res.status(200).json({
         message: 'Successfully updated products!',
         result: productUpdate,
       });
     } catch (error: any) {
-      res.status(500).json({
+      return res.status(500).json({
         message: error.message,
       });
     }
@@ -96,17 +101,17 @@ export class ProductController {
       const product = await productModel.getProductById(
         parseInt(req.params.id)
       );
-      if (Object.keys(product).length === 0) {
-        res.status(404).json({
+      if (product === null || product === undefined) {
+        return res.status(404).json({
           message: `Not found product ${req.params.id}!`,
         });
       }
       await productModel.deleteProduct(parseInt(req.params.id as string));
-      res.status(200).json({
+      return res.status(200).json({
         status: `Successfully deleted product ${req.params.id}!`,
       });
     } catch (error: any) {
-      res.status(500).json({
+      return res.status(500).json({
         message: error.message,
       });
     }

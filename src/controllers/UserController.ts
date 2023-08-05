@@ -9,12 +9,12 @@ export class UserController {
   async getUsers(_req: express.Request, res: express.Response) {
     try {
       const users = await userModel.getUsers();
-      res.status(200).json({
+      return res.status(200).json({
         message: 'Successfully getted users!',
         result: users,
       });
     } catch (error: any) {
-      res.status(500).json({
+      return res.status(500).json({
         message: error.message,
       });
     }
@@ -23,12 +23,17 @@ export class UserController {
   async getUserById(req: express.Request, res: express.Response) {
     try {
       const user = await userModel.getUserById(parseInt(req.params.id));
-      res.status(200).json({
+      if (user === null || user === undefined) {
+        return res.status(404).json({
+          message: `Not found product ${req.params.id}!`,
+        });
+      }
+      return res.status(200).json({
         message: 'Successfully getted users!',
         result: user,
       });
     } catch (error: any) {
-      res.status(500).json({
+      return res.status(500).json({
         message: error.message,
       });
     }
@@ -37,12 +42,12 @@ export class UserController {
   async getUserByUsername(req: express.Request, res: express.Response) {
     try {
       const user = await userModel.getUserByUsername(req.params.username);
-      res.status(200).json({
+      return res.status(200).json({
         message: 'Successfully getted users!',
         result: user,
       });
     } catch (error: any) {
-      res.status(500).json({
+      return res.status(500).json({
         message: error.message,
       });
     }
@@ -57,9 +62,9 @@ export class UserController {
       const password = req.body.password as string;
 
       const userById = await userModel.getUserById(id);
-      if (!userById) {
-        return res.status(400).json({
-          message: 'User is not exist!',
+      if (userById === null || userById === undefined) {
+        return res.status(404).json({
+          message: `Not found product ${req.params.id}!`,
         });
       }
 
@@ -80,12 +85,12 @@ export class UserController {
 
       const userUpdated = await userModel.updateUser(userUpdate);
 
-      res.status(200).json({
+      return res.status(200).json({
         message: 'Successfully updated users!',
         result: userUpdated,
       });
     } catch (error: any) {
-      res.status(500).json({
+      return res.status(500).json({
         message: error.message,
       });
     }
@@ -93,12 +98,18 @@ export class UserController {
 
   async deleteUser(req: express.Request, res: express.Response) {
     try {
+      const userById = await userModel.getUserById(parseInt(req.params.id as string));
+      if (userById === null || userById === undefined) {
+        return res.status(404).json({
+          message: `Not found product ${req.params.id}!`,
+        });
+      }
       await userModel.deleteUser(parseInt(req.params.id as string));
-      res.status(200).json({
+      return res.status(200).json({
         message: `Successfully deleted user ${req.params.id}!`,
       });
     } catch (error: any) {
-      res.status(500).json({
+      return res.status(500).json({
         message: error.message,
       });
     }

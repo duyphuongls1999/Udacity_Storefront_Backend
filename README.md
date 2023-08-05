@@ -11,24 +11,25 @@ The application uses the following libraries:
 * Testing: Jasmine and Supertest
 
 ## Installation Instructions
+
 ### Dev mode
 To install the app's dependencies and use the app in dev mode, run the following: 
+Installed `postgres` on your local system and connect into server.
+Create DB by script: create database storefront_dev;
 
-`yarn && yarn create-dev-db` 
-
-`yarn create-dev-db` runs a script that uses db-migrate to create a new database called `full_stack_dev` and runs the migrations to create the tables. This script assumes you have installed `postgres` on your local system and the server is running.
+`yarn dev-up` runs the migrations to create the tables.
+`yarn dev-down` runs the migrations to drop the tables.
 
 To run the app in dev mode execute `yarn start`.
 ### Test mode
 To install the app's dependencies and use the app in test mode, run the following:
+Installed `postgres` on your local system and connect into server.
+Create DB by script: create database storefront_test;
 
-`yarn && yarn create-test-db`
-
-`yarn create-test-db` runs a script that uses db-migrate to create a new database called `full_stack_test` and runs the migrations to create the tables. This script assumes you have installed `postgres` on your local system and the server is running.
+`yarn test-up` runs the migrations to create the tables.
+`yarn test-down` runs the migrations to drop the tables.
 
 To run the tests execute `yarn test`.
-
-NOTE: It is not necessary to run `db-migrate up` at the command line as the scripts contain the necessary calls to operations. 
 
 ### Ports
 The application runs on port `3000` with database on `5432`.

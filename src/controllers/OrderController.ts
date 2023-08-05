@@ -12,7 +12,7 @@ export class OrderController {
         result: orders,
       });
     } catch (error: any) {
-      res.status(500).json({
+      return res.status(500).json({
         message: error.message,
       });
     }
@@ -45,9 +45,9 @@ export class OrderController {
 
       const orderCreate = await orderModel.createOrder({
         user_id: parseInt(user_id as string),
-        status: status as string,
         product_id: parseInt(product_id as string),
         quantity: parseInt(quantity as string),
+        status: status as string,
       });
 
       return res.status(200).json({
@@ -55,7 +55,7 @@ export class OrderController {
         result: orderCreate,
       });
     } catch (error: any) {
-      res.status(500).json({
+      return res.status(500).json({
         message: error.message,
       });
     }
@@ -88,8 +88,8 @@ export class OrderController {
       }
 
       const order = await orderModel.getOrderById(parseInt(req.params.id));
-      if (Object.keys(order).length === 0) {
-        res.status(404).json({
+      if (order === null || order === undefined) {
+        return res.status(404).json({
           message: `Not found order ${req.params.id}!`,
         });
       }
@@ -101,12 +101,12 @@ export class OrderController {
         product_id: parseInt(product_id as string),
         quantity: parseInt(quantity as string),
       });
-      res.status(200).json({
+      return res.status(200).json({
         message: 'Successfully updated order!',
         result: orderUpdate,
       });
     } catch (error: any) {
-      res.status(500).json({
+      return res.status(500).json({
         message: error.message,
       });
     }
@@ -115,15 +115,17 @@ export class OrderController {
   async getOrderById(req: Request, res: Response) {
     try {
       const order = await orderModel.getOrderById(parseInt(req.params.id));
-      if (Object.keys(order).length === 0) {
-        res.status(404).json({ status: `Not found order ${req.params.id}` });
+      if (order === null || order === undefined) {
+        return res
+          .status(404)
+          .json({ status: `Not found order ${req.params.id}` });
       }
-      res.status(200).json({
+      return res.status(200).json({
         message: 'Successfully getted order!',
         result: order,
       });
     } catch (error: any) {
-      res.status(500).json({
+      return res.status(500).json({
         message: error.message,
       });
     }
@@ -132,17 +134,17 @@ export class OrderController {
   async deleteOrder(req: Request, res: Response) {
     try {
       const order = await orderModel.getOrderById(parseInt(req.params.id));
-      if (Object.keys(order).length === 0) {
-        res.status(404).json({
+      if (order === null || order === undefined) {
+        return res.status(404).json({
           message: `Not found order ${req.params.id}!`,
         });
       }
       await orderModel.deleteOrder(parseInt(req.params.id as string));
-      res.status(200).json({
+      return res.status(200).json({
         message: `Successfully deleted order ${req.params.id}!`,
       });
     } catch (error: any) {
-      res.status(500).json({
+      return res.status(500).json({
         message: error.message,
       });
     }
