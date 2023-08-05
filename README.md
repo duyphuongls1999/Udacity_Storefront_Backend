@@ -10,6 +10,26 @@ The application uses the following libraries:
 * Database: Postgres
 * Testing: Jasmine and Supertest
 
+## Environment variables 
+```
+NODE_ENV = dev
+
+# DB VARIABLES
+DB_HOST=localhost
+DB_PORT=5432
+DB_NAME_DEV=storefront_dev
+DB_NAME_TEST=storefront_test
+DB_USER=postgres
+DB_PASS=123456
+
+# BCRYPT VARIABLES
+BCRYPT_PASSWORD=$2a$08$j3hOyrJ8X0zcPOCZHyVw4uggAO7hkBipA/QscePpVSpOEGrsUGaYu
+SALT_ROUNDS=8
+
+# JWT
+JWT_SECRET=anhhaiphuong@22
+```
+
 ## Installation Instructions
 
 ### Dev mode
@@ -34,23 +54,3 @@ To run the tests execute `yarn test`.
 ### Ports
 The application runs on port `3000` with database on `5432`.
 
-### Environment variables 
-To satisfy Udacity requirements, the following environment variable are needed.
-```
-NODE_ENV = dev
-
-# DB VARIABLES
-DB_HOST=localhost
-DB_PORT=5432
-DB_NAME_DEV=storefront_dev
-DB_NAME_TEST=storefront_test
-DB_USER=postgres
-DB_PASS=123456
-
-# BCRYPT VARIABLES
-BCRYPT_PASSWORD=$2a$08$j3hOyrJ8X0zcPOCZHyVw4uggAO7hkBipA/QscePpVSpOEGrsUGaYu
-SALT_ROUNDS=8
-
-# JWT
-JWT_SECRET=anhhaiphuong@22
-```
