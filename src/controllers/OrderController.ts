@@ -20,21 +20,11 @@ export class OrderController {
 
   async createOrder(req: Request, res: Response) {
     try {
-      const { user_id, product_id, quantity, status } = req.body;
+      const { user_id, status } = req.body;
 
       if (!user_id) {
         return res.status(400).json({
           message: 'Missing user id!',
-        });
-      }
-      if (!product_id) {
-        return res.status(400).json({
-          message: 'Missing product id!',
-        });
-      }
-      if (!quantity) {
-        return res.status(400).json({
-          message: 'Missing quantity',
         });
       }
       if (!status) {
@@ -45,8 +35,6 @@ export class OrderController {
 
       const orderCreate = await orderModel.createOrder({
         user_id: parseInt(user_id as string),
-        product_id: parseInt(product_id as string),
-        quantity: parseInt(quantity as string),
         status: status as string,
       });
 
@@ -61,9 +49,36 @@ export class OrderController {
     }
   }
 
+  
+  async addProductToOrder(req: Request, res: Response) {
+    try {
+        const order_id = parseInt(req.body.order_id);
+        const product_id = parseInt(req.body.product_id as string);
+        const quantity = parseInt(req.body.quantity as string);
+
+        if (!order_id || !product_id || !quantity) {
+            return res.status(400).json({
+                error: 'Missing one or more required parameters',
+            });
+        }
+
+        const product = await orderModel.addProductToOrder({
+            order_id,
+            product_id,
+            quantity,
+        });
+
+        res.status(200).json(product);
+      } catch (error: any) {
+        return res.status(500).json({
+          message: error.message,
+        });
+      }
+}
+
   async updateOrder(req: Request, res: Response) {
     try {
-      const { user_id, product_id, quantity, status } = req.body;
+      const { user_id, status } = req.body;
       const id = req.params.id;
 
       if (!user_id) {
@@ -74,16 +89,6 @@ export class OrderController {
       if (!status) {
         return res.status(400).json({
           message: 'Missing status!',
-        });
-      }
-      if (!product_id) {
-        return res.status(400).json({
-          message: 'Missing product id!',
-        });
-      }
-      if (!quantity) {
-        return res.status(400).json({
-          message: 'Missing quantity!',
         });
       }
 
@@ -98,8 +103,6 @@ export class OrderController {
         id: parseInt(id as string),
         user_id: parseInt(user_id as string),
         status: status as string,
-        product_id: parseInt(product_id as string),
-        quantity: parseInt(quantity as string),
       });
       return res.status(200).json({
         message: 'Successfully updated order!',

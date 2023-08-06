@@ -1,6 +1,7 @@
 // @ts-ignore
 import { pool } from '../config/database';
 import { Order } from '../interfaces/order';
+import { ProductToOrder } from '../interfaces/productToOrder';
 
 export class OrderModel {
   async getOrders(): Promise<Order[]> {
@@ -21,11 +22,11 @@ export class OrderModel {
   async createOrder(o: Order): Promise<Order> {
     try {
       const sql =
-        'INSERT INTO public.order (user_id, product_id, status) VALUES($1, $2, $3) RETURNING *';
+        'INSERT INTO public.order (user_id, status) VALUES($1, $2) RETURNING *';
       // @ts-ignore
       const connection = await pool.connect();
 
-      const result = await connection.query(sql, [o.user_id, o.product_id, o.status]);
+      const result = await connection.query(sql, [o.user_id, o.status]);
       connection.release();
 
       return result.rows[0];
@@ -36,11 +37,11 @@ export class OrderModel {
 
   async updateOrder(o: Order): Promise<Order> {
     try {
-      const sql = 'UPDATE public.order SET user_id = $2, product_id = $3, status = $4 WHERE id = $1 RETURNING *';
+      const sql = 'UPDATE public.order SET user_id = $2, status = $3 WHERE id = $1 RETURNING *';
       // @ts-ignore
       const connection = await pool.connect();
 
-      const result = await connection.query(sql, [o.id, o.user_id, o.product_id, o.status]);
+      const result = await connection.query(sql, [o.id, o.user_id, o.status]);
       connection.release();
 
       return result.rows[0];
@@ -60,6 +61,27 @@ export class OrderModel {
       return result.rows[0];
     } catch (err) {
       throw new Error(`Could not find product ${id}. Error: ${err}`);
+    }
+  }
+
+  
+  async addProductToOrder(p: ProductToOrder): Promise<ProductToOrder> {
+    try {
+        const sql =
+            'INSERT INTO order_products (order_id, product_id, quantity) VALUES($1, $2, $3) RETURNING *';
+        // @ts-ignore
+        const connection = await pool.connect();
+
+        const result = await connection.query(sql, [
+            p.order_id,
+            p.product_id,
+            p.quantity,
+        ]);
+        connection.release();
+
+        return result.rows[0];
+    } catch (err) {
+        throw new Error(`Could not add product. Error: ${err}`);
     }
   }
 

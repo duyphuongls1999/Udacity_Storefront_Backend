@@ -10,3 +10,4 @@ orderRouter.post('/', authToken, controller.createOrder);
 orderRouter.put('/:id', authToken, controller.updateOrder);
 orderRouter.get('/:id', authToken, controller.getOrderById);
 orderRouter.delete('/:id', authToken, controller.deleteOrder);
+orderRouter.post('/addProduct/', authToken, controller.addProductToOrder);

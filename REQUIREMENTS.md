@@ -79,12 +79,28 @@ The SQL schema for this table is as follows:
 CREATE TABLE IF NOT EXISTS "order" (
     id SERIAL PRIMARY KEY  NOT NULL,
     user_id INTEGER NOT NULL,
-    product_id INTEGER NOT NULL,
-    quantity INTEGER DEFAULT 1,
     "status" VARCHAR(50) NOT NULL,
 
-    FOREIGN KEY (product_id) REFERENCES "product"(id) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (user_id) REFERENCES "user"(id) ON DELETE CASCADE ON UPDATE CASCADE
+    CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES "user"(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+```
+
+#### Order Products
+The table includes the following fields:
+- id
+- order_id
+- product_id
+- quantity
+The SQL schema for this table is as follows:
+```sql
+CREATE TABLE IF NOT EXISTS  "order_products" (
+    id SERIAL PRIMARY KEY  NOT NULL,
+    order_id INT NOT NULL,
+    product_id INTEGER NOT NULL,
+    quantity INTEGER DEFAULT 1,
+
+    CONSTRAINT fk_order FOREIGN KEY (order_id) REFERENCES "order"(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT fk_products FOREIGN KEY (product_id) REFERENCES "product"(id) ON DELETE CASCADE ON  UPDATE CASCADE
 );
 ```
 
@@ -108,6 +124,7 @@ You should write unit tests for the following database actions:
 - Deleting a product by ID
 
 - Creating an order
+- Add product to order
 - Getting an order by ID
 - Getting all orders
 - Updating an order by ID

@@ -65,7 +65,7 @@ export class UserModel {
       // @ts-ignore
       const connection = await pool.connect();
       const sql =
-        'INSERT INTO public.user (username, first_name, last_name, password) VALUES($1, $2, $3, $4)';
+        'INSERT INTO public.user (username, first_name, last_name, password) VALUES($1, $2, $3, $4) RETURNING *';
 
       const result = await connection.query(sql, [
         u.username,

@@ -1,0 +1,9 @@
+CREATE TABLE IF NOT EXISTS  "order_products" (
+    id SERIAL PRIMARY KEY  NOT NULL,
+    order_id INT NOT NULL,
+    product_id INTEGER NOT NULL,
+    quantity INTEGER DEFAULT 1,
+
+    CONSTRAINT fk_order FOREIGN KEY (order_id) REFERENCES "order"(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT fk_products FOREIGN KEY (product_id) REFERENCES "product"(id) ON DELETE CASCADE ON  UPDATE CASCADE
+);

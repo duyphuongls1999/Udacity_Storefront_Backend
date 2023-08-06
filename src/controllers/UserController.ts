@@ -42,6 +42,12 @@ export class UserController {
   async getUserByUsername(req: express.Request, res: express.Response) {
     try {
       const user = await userModel.getUserByUsername(req.params.username);
+      if(user === null || user === undefined) {
+        return res.status(404).json({
+          message: `Username ${req.params.username} is not exist!`,
+          result: user,
+        });
+      }
       return res.status(200).json({
         message: 'Successfully getted users!',
         result: user,

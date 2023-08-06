@@ -9,8 +9,6 @@ describe('Orders controllers: ', () => {
   it('/order should return a new order ', () => {
     const data = {
         user_id: 2,
-        product_id: 3,
-        quantity: 2,
         status: 'Order'
       };
     request
@@ -24,8 +22,6 @@ describe('Orders controllers: ', () => {
         result: {    
             id: 1,    
             user_id: 2,
-            product_id: 3,
-            quantity: 2,
             status: 'Order'
         }
       });
@@ -42,15 +38,11 @@ describe('Orders controllers: ', () => {
         result: [{
             id: 1,
             user_id: 2,
-            product_id: 2,
-            quantity: 1,
             status: 'Order'
         },
         {
             id: 2,
             user_id: 1,
-            product_id: 2,
-            quantity: 1,
             status: 'Shipping'
         }]
       });
@@ -67,8 +59,6 @@ describe('Orders controllers: ', () => {
         result: {
             id: 3,
             user_id: 1,
-            product_id: 2,
-            quantity: 1,
             status: 'Order'
         }
     });
@@ -77,8 +67,6 @@ describe('Orders controllers: ', () => {
   it('/orders should update an order', () => {
     const data = {
         user_id: 1,
-        product_id: 2,
-        quantity: 2,
         status: 'Shipping',
       };
     request
@@ -92,8 +80,6 @@ describe('Orders controllers: ', () => {
         result: {
             id: 2,
             user_id: 1,
-            product_id: 2,
-            quantity: 1,
             status: 'Shipping'
         }
     });
